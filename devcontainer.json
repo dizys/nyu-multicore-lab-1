@@ -1,6 +1,6 @@
 {
     "name": "OpenMP",
-    "image": "ubuntu:latest",
+    "image": "ghcr.io/dizys/nyu-multicore-lab-1:main",
     "extensions": [
         "VisualVisualStudioExptTeam.vscodeintellicodeStudio"
     ]
