@@ -3,5 +3,5 @@
 {
   "name": "OpenMP",
   "image": "dizy/nyu-multicore-lab-1-dev:latest",
-  "extensions": ["VisualVisualStudioExptTeam.vscodeintellicodeStudio"]
+  "extensions": ["VisualVisualStudioExptTeam.vscodeintellicodeStudio", "ms-vscode.cpptools-extension-pack"]
 }

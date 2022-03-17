@@ -4,23 +4,25 @@
 #define MAX_BIN_NUM 50
 #define MAX_THREAD_NUM 100
 
-void print_help(char* executable);
+void print_help(char *executable);
 
 int main(int argc, char *argv[])
 {
-    char* executable = argv[0];
-    if (argc != 4) {
+    char *executable = argv[0];
+    if (argc != 4)
+    {
         printf("Error: invalid arguments\n\n");
         print_help(executable);
         return 1;
     }
-    char* bin_count_str = argv[1];
-    char* thread_count_str = argv[2];
-    char* file_name = argv[3];
+    char *bin_count_str = argv[1];
+    char *thread_count_str = argv[2];
+    char *file_name = argv[3];
 
-    FILE* fp = fopen(file_name, "r");
+    FILE *fp = fopen(file_name, "r");
 
-    if (fp == NULL) {
+    if (fp == NULL)
+    {
         printf("Error: cannot create file %s\n", file_name);
         return 1;
     }
@@ -28,12 +30,14 @@ int main(int argc, char *argv[])
     int bin_count = atoi(bin_count_str);
     int thread_count = atoi(thread_count_str);
 
-    if (bin_count <= 0 || bin_count > MAX_BIN_NUM) {
+    if (bin_count <= 0 || bin_count > MAX_BIN_NUM)
+    {
         printf("Error: invalid bin count %s\n", bin_count_str);
         return 1;
     }
 
-    if (thread_count <= 0 || thread_count > MAX_THREAD_NUM) {
+    if (thread_count <= 0 || thread_count > MAX_THREAD_NUM)
+    {
         printf("Error: invalid thread count %s\n", thread_count_str);
         return 1;
     }
@@ -42,29 +46,32 @@ int main(int argc, char *argv[])
     fscanf(fp, "%d", &num_count);
 
     double nums[num_count];
-    for (int i = 0; i < num_count; i++) {
+    for (int i = 0; i < num_count; i++)
+    {
         fscanf(fp, "%lf", &nums[i]);
     }
 
     fclose(fp);
 
     int bin_counter[bin_count];
-    for (int i = 0; i < bin_count; i++) {
+    for (int i = 0; i < bin_count; i++)
+    {
         bin_counter[i] = 0;
     }
 
-    for (int i = 0; i < num_count; i++) {
+    for (int i = 0; i < num_count; i++)
+    {
         int bin_index = (int)(nums[i] * bin_count / 100.0);
         bin_counter[bin_index]++;
     }
 
-    for (int i = 0; i < bin_count; i++) {
+    for (int i = 0; i < bin_count; i++)
+    {
         printf("bin[%d]=%d\n", i, bin_counter[i]);
     }
 }
 
-
-void print_help(char* executable)
+void print_help(char *executable)
 {
     printf("usage: %s b t filename\n\n", executable);
     printf("A sequential version of histagram statistics counter.\n\n");
