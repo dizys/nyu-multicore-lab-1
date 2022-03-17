@@ -1,7 +1,0 @@
-{
-    "name": "OpenMP",
-    "image": "ghcr.io/dizys/nyu-multicore-lab-1:main",
-    "extensions": [
-        "VisualVisualStudioExptTeam.vscodeintellicodeStudio"
-    ]
-}
