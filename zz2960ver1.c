@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     fscanf(fp, "%d", &num_count);
 
     // Read in numbers
-    double nums[num_count];
+    double *nums = (double *)malloc(num_count * sizeof(double)); // use malloc to prevent segment fault when too many numbers
     for (int i = 0; i < num_count; i++)
     {
         fscanf(fp, "%lf", &nums[i]);
