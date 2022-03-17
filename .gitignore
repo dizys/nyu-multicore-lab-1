@@ -1,0 +1,12 @@
+# junk
+.DS_Store
+
+# debug
+*.log
+*.stackdump
+
+# Artifacts
+/out/
+zz2960seq
+zz2960ver1
+zz2960ver2
