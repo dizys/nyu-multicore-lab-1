@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define MAX_BIN_NUM 50
 #define MAX_THREAD_NUM 100
@@ -64,6 +65,9 @@ int main(int argc, char *argv[])
         bin_counter[i] = 0;
     }
 
+    clock_t start_time, finish_time;
+    start_time = clock(); // record start time
+
     for (int i = 0; i < num_count; i++)
     {
         // Find bin index for number i
@@ -72,11 +76,16 @@ int main(int argc, char *argv[])
         bin_counter[bin_index]++;
     }
 
+    finish_time = clock();
+
     // Print out result
     for (int i = 0; i < bin_count; i++)
     {
         printf("bin[%d]=%d\n", i, bin_counter[i]);
     }
+
+    // Print time statistics
+    printf("Parallel part finished in %ld clock ticks.\n", finish_time - start_time);
 }
 
 void print_help(char *executable)
