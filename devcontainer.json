@@ -1,0 +1,7 @@
+{
+    "name": "OpenMP",
+    "image": "ubuntu:latest",
+    "extensions": [
+        "VisualVisualStudioExptTeam.vscodeintellicodeStudio"
+    ]
+}
