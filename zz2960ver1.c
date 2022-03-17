@@ -8,6 +8,7 @@ void print_help(char *executable);
 
 int main(int argc, char *argv[])
 {
+    // Command line arguments processing
     char *executable = argv[0];
     if (argc != 4)
     {
@@ -19,6 +20,7 @@ int main(int argc, char *argv[])
     char *thread_count_str = argv[2];
     char *file_name = argv[3];
 
+    // Open input file
     FILE *fp = fopen(file_name, "r");
 
     if (fp == NULL)
@@ -42,9 +44,11 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    // Read num count in input file
     int num_count = 0;
     fscanf(fp, "%d", &num_count);
 
+    // Read in numbers
     double nums[num_count];
     for (int i = 0; i < num_count; i++)
     {
@@ -55,21 +59,27 @@ int main(int argc, char *argv[])
 
     int bin_counter[bin_count];
 
-#pragma omp parallel for num_threads(thread_count)
+#pragma omp parallel for num_threads(thread_count) \
+    shared(bin_counter)
     for (int i = 0; i < bin_count; i++)
     {
         int bin = 0;
+        // for every bin, go through all numbers
         for (int j = 0; j < num_count; j++)
         {
+            // Find bin index for number j
             int bin_index = (int)(nums[j] * bin_count / 100.0);
             if (bin_index == i)
             {
+                // Increase the local counter
                 bin++;
             }
         }
+        // Assign bin count to shared bin_counter[i]
         bin_counter[i] = bin;
     }
 
+    // Print out result
     for (int i = 0; i < bin_count; i++)
     {
         printf("bin[%d]=%d\n", i, bin_counter[i]);

@@ -9,6 +9,7 @@ void print_help(char *executable);
 
 int main(int argc, char *argv[])
 {
+    // Command line arguments processing
     char *executable = argv[0];
     if (argc != 4)
     {
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
     char *thread_count_str = argv[2];
     char *file_name = argv[3];
 
+    // Open input file
     FILE *fp = fopen(file_name, "r");
 
     if (fp == NULL)
@@ -43,9 +45,11 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    // Read num count in input file
     int num_count = 0;
     fscanf(fp, "%d", &num_count);
 
+    // Read in numbers
     double nums[num_count];
     for (int i = 0; i < num_count; i++)
     {
@@ -54,40 +58,48 @@ int main(int argc, char *argv[])
 
     fclose(fp);
 
+    // Intialize bin_counter array
     int bin_counter[bin_count];
     for (int i = 0; i < bin_count; i++)
     {
         bin_counter[i] = 0;
     }
 
-    int num_range = (int)ceil((double)num_count / thread_count);
+    // Calculate the range length of indexes for numbers to be processed in per thread
+    int num_range_length = (int)ceil((double)num_count / thread_count);
 
-    printf("num_range: %d\n", num_range);
-
-#pragma omp parallel for num_threads(thread_count)
+#pragma omp parallel for num_threads(thread_count) \
+    shared(bin_counter)
     for (int i = 0; i < thread_count; i++)
     {
+        // Intialize local_bin_counter array
         int local_bin_counter[bin_count];
         for (int i = 0; i < bin_count; i++)
         {
             local_bin_counter[i] = 0;
         }
 
-        int start = i * num_range;
-        int end = i * num_range + num_range;
+        // Calculate number range for this thread
+        int start = i * num_range_length;
+        int end = i * num_range_length + num_range_length;
 
+        // Go through all numbers in assigned range
         for (int j = start; j < end && j < num_count; j++)
         {
+            // Find bin index for number j
             int bin_index = (int)(nums[j] * bin_count / 100.0);
+            // Increase the local counter
             local_bin_counter[bin_index]++;
         }
 
+        // Increase the global counter
         for (int j = 0; j < bin_count; j++)
         {
             bin_counter[j] += local_bin_counter[j];
         }
     }
 
+    // Print out result
     for (int i = 0; i < bin_count; i++)
     {
         printf("bin[%d]=%d\n", i, bin_counter[i]);

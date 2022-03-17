@@ -8,6 +8,7 @@ void print_help(char *executable);
 
 int main(int argc, char *argv[])
 {
+    // Command line arguments processing
     char *executable = argv[0];
     if (argc != 4)
     {
@@ -19,6 +20,7 @@ int main(int argc, char *argv[])
     char *thread_count_str = argv[2];
     char *file_name = argv[3];
 
+    // Open input file
     FILE *fp = fopen(file_name, "r");
 
     if (fp == NULL)
@@ -42,9 +44,11 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    // Read num count in input file
     int num_count = 0;
     fscanf(fp, "%d", &num_count);
 
+    // Read in numbers
     double nums[num_count];
     for (int i = 0; i < num_count; i++)
     {
@@ -53,6 +57,7 @@ int main(int argc, char *argv[])
 
     fclose(fp);
 
+    // Intialize bin_counter array
     int bin_counter[bin_count];
     for (int i = 0; i < bin_count; i++)
     {
@@ -61,10 +66,13 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < num_count; i++)
     {
+        // Find bin index for number i
         int bin_index = (int)(nums[i] * bin_count / 100.0);
+        // Increase counter
         bin_counter[bin_index]++;
     }
 
+    // Print out result
     for (int i = 0; i < bin_count; i++)
     {
         printf("bin[%d]=%d\n", i, bin_counter[i]);
