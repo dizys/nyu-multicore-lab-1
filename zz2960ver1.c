@@ -6,10 +6,6 @@
 
 void print_help(char* executable);
 
-int get_bin_index(double num, int bin_num) {
-    return (int)(num * bin_num / 100.0);
-}
-
 int main(int argc, char *argv[])
 {
     char* executable = argv[0];
@@ -53,13 +49,17 @@ int main(int argc, char *argv[])
     fclose(fp);
 
     int bin_counter[bin_count];
-    for (int i = 0; i < bin_count; i++) {
-        bin_counter[i] = 0;
-    }
 
-    for (int i = 0; i < num_count; i++) {
-        int bin_index = get_bin_index(nums[i], bin_count);
-        bin_counter[bin_index]++;
+#pragma omp parallel for num_threads(thread_count)
+    for (int i = 0; i < bin_count; i++) {
+        int bin = 0;
+        for (int j = 0; j < num_count; j++) {
+            int bin_index = (int)(nums[j] * bin_count / 100.0);
+            if (bin_index == i) {
+                bin++;
+            }
+        }
+        bin_counter[i] = bin;
     }
 
     for (int i = 0; i < bin_count; i++) {

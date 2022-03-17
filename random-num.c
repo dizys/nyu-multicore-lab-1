@@ -7,8 +7,8 @@ int main(int argc, char *argv[])
 {
     int count = 0;
     FILE * fp;
-    float num = 20.0;
-    
+    float num = 100.0;
+
     if(argc != 3 ){
 	printf("usage: ./genfile name num\n");
 	printf("name: the name of the file to be generated\n");
@@ -26,10 +26,10 @@ int main(int argc, char *argv[])
 
     srand((unsigned int)time(NULL));
 
-    fprintf(fp,"%d ", count); 
+    fprintf(fp,"%d ", count);
     for (int i=0;i<count;i++)
         fprintf(fp, "%f ", ((float)rand()/(float)(RAND_MAX)) * num);
-    
+
     printf("Generated %d floating point numbers and stored in file %s\n", count, argv[1]);
 
     fclose(fp);

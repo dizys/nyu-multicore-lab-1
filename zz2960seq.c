@@ -6,10 +6,6 @@
 
 void print_help(char* executable);
 
-int get_bin_index(double num, int bin_num) {
-    return (int)(num * bin_num / 100.0);
-}
-
 int main(int argc, char *argv[])
 {
     char* executable = argv[0];
@@ -58,7 +54,7 @@ int main(int argc, char *argv[])
     }
 
     for (int i = 0; i < num_count; i++) {
-        int bin_index = get_bin_index(nums[i], bin_count);
+        int bin_index = (int)(nums[i] * bin_count / 100.0);
         bin_counter[bin_index]++;
     }
 
