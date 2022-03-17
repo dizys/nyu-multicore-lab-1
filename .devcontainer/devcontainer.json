@@ -3,6 +3,5 @@
 {
   "name": "OpenMP",
   "image": "dizy/nyu-multicore-lab-1-dev:latest",
-  "remoteUser": "vscode",
   "extensions": ["VisualVisualStudioExptTeam.vscodeintellicodeStudio"]
 }
