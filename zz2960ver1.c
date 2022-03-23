@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
     }
 
     // Print time statistics
-    printf("Parallel part finished in %ld clock ticks.\n", finish_time - start_time);
+    printf("Parallel part finished in %f sec.\n", ((double)(finish_time - start_time)) / CLOCKS_PER_SEC);
 }
 
 void print_help(char *executable)
