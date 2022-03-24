@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <omp.h>
 
 #define MAX_BIN_NUM 50
 #define MAX_THREAD_NUM 100
@@ -65,8 +66,8 @@ int main(int argc, char *argv[])
         bin_counter[i] = 0;
     }
 
-    clock_t start_time, finish_time;
-    start_time = clock(); // record start time
+    double start_time, finish_time;
+    start_time = omp_get_wtime(); // record start time
 
     for (int i = 0; i < num_count; i++)
     {
@@ -76,7 +77,7 @@ int main(int argc, char *argv[])
         bin_counter[bin_index]++;
     }
 
-    finish_time = clock();
+    finish_time = omp_get_wtime();
 
     // Print out result
     for (int i = 0; i < bin_count; i++)
@@ -85,7 +86,7 @@ int main(int argc, char *argv[])
     }
 
     // Print time statistics
-    printf("Parallel part finished in %lf sec.\n", ((double)(finish_time - start_time)) / CLOCKS_PER_SEC);
+    printf("Parallel part finished in %lf sec.\n", finish_time - start_time);
 }
 
 void print_help(char *executable)

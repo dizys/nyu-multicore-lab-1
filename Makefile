@@ -9,7 +9,7 @@ random-num: random-num.c
 	$(GCC_BIN) -Wall -o random-num -std=$(GCC_STD) random-num.c
 
 zz2960seq: zz2960seq.c
-	$(GCC_BIN) -Wall -o zz2960seq -std=$(GCC_STD) zz2960seq.c
+	$(GCC_BIN) -fopenmp -Wall -o zz2960seq -std=$(GCC_STD) zz2960seq.c
 
 zz2960ver1: zz2960ver1.c
 	$(GCC_BIN) -fopenmp -Wall -o zz2960ver1 -std=$(GCC_STD) zz2960ver1.c

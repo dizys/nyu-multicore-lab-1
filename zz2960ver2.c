@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <omp.h>
 
 #define MAX_BIN_NUM 50
 #define MAX_THREAD_NUM 100
@@ -69,8 +70,8 @@ int main(int argc, char *argv[])
     // Calculate the range length of indexes for numbers to be processed in per thread
     int num_range_length = (int)ceil((double)num_count / thread_count);
 
-    clock_t start_time, finish_time;
-    start_time = clock(); // record start time
+    double start_time, finish_time;
+    start_time = omp_get_wtime(); // record start time
 
 #pragma omp parallel for num_threads(thread_count) \
     shared(bin_counter)
@@ -103,7 +104,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    finish_time = clock();
+    finish_time = omp_get_wtime();
 
     // Print out result
     for (int i = 0; i < bin_count; i++)
@@ -112,7 +113,7 @@ int main(int argc, char *argv[])
     }
 
     // Print time statistics
-    printf("Parallel part finished in %lf sec.\n", ((double)(finish_time - start_time)) / CLOCKS_PER_SEC);
+    printf("Parallel part finished in %lf sec.\n", finish_time - start_time);
 }
 
 void print_help(char *executable)
